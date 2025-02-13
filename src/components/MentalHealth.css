@@ -1,0 +1,157 @@
+.mental-health {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .mental-health-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('../assets/mind.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .mental-health-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mental-health-hero h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #7cc6fe;
+  }
+  
+  .hero-description {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+  }
+  
+  .why-matters {
+    background-color: #f8f9fa;
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+    border-radius: 10px;
+  }
+  
+  .support-services {
+    padding: 3rem 2rem;
+  }
+  
+  .support-services h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .service-card i {
+    font-size: 2.5rem;
+    color: #4a90e2;
+    margin-bottom: 1.5rem;
+  }
+  
+  .service-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-btn:hover {
+    background-color: #357abd;
+  }
+  
+  .support-message {
+    background-color: #4a90e2;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+  
+  .emergency-contact {
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+  
+  .emergency-btn {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .emergency-btn:hover {
+    background-color: #ff6b81;
+  }
+  
+  .closing-message {
+    text-align: center;
+    padding: 3rem 2rem;
+    background-color: #f8f9fa;
+  }
+  
+  .closing-message h3 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .mental-health-hero h1 {
+      font-size: 2rem;
+    }
+  
+    .mental-health-hero h2 {
+      font-size: 1.5rem;
+    }
+  
+    .hero-description {
+      font-size: 1rem;
+    }
+  
+    .services-container {
+      grid-template-columns: 1fr;
+    }
+  }
