@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -40,35 +39,17 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+#Frontend Images
+![WhatsApp Image 2025-02-14 at 02 16 40_b0a8f065](https://github.com/user-attachments/assets/415cabfc-4144-4de2-9fed-5c8c9af1f97a)
+![WhatsApp Image 2025-02-14 at 02 16 41_3fa33041](https://github.com/user-attachments/assets/2bc4e98a-5132-41e7-a308-5ad174d5bb52)
+![WhatsApp Image 2025-02-14 at 02 16 42_8c649923](https://github.com/user-attachments/assets/6e6de775-a847-4e18-b770-bc35838ffd6d)
+![WhatsApp Image 2025-02-14 at 02 16 42_5f0c82bc](https://github.com/user-attachments/assets/ac746a55-4c09-4955-ba9b-f73a8f09eaf4)
+![WhatsApp Image 2025-02-14 at 02 16 42_9b5e26f4](https://github.com/user-attachments/assets/8f24dc5c-dcbd-45a5-9448-f9f1a022bf9d)
+![WhatsApp Image 2025-02-14 at 02 16 43_36b81dca](https://github.com/user-attachments/assets/e7dffff4-36e9-4756-808d-efa7995d9cb3)
+![WhatsApp Image 2025-02-14 at 02 16 43_88337386](https://github.com/user-attachments/assets/0616c8ed-405c-4058-af7d-662fd12fedea)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
 # ApadaMitra
 >>>>>>> e16254c8ce41cf72e300dfb7e53d2c092f48045f
