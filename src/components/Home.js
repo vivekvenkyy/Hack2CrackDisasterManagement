@@ -36,11 +36,7 @@ function Home() {
             <h3>Emergency Resources</h3>
             <p>Access essential guides, safety tips, and step-by-step preparedness plans for different types of disasters.</p>
           </div>
-          <div className="service-card">
-            <i className="fas fa-hands-helping"></i>
-            <h3>Rescue & Relief Assistance</h3>
-            <p>Find helpline numbers, emergency contacts, and nearby relief centers to get immediate support.</p>
-          </div>
+
           <div className="service-card">
             <i className="fas fa-users"></i>
             <h3>Community Support & Volunteering</h3>

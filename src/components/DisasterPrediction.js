@@ -1,221 +1,283 @@
-import { useState } from 'react';
-import './DisasterPrediction.css';
+import React, { useState } from 'react';
+import {
+    Box,
+    TextField,
+    Button,
+    Card,
+    CardContent,
+    Typography,
+    Grid,
+    Paper,
+    Container,
+    Alert,
+    Snackbar,
+    CircularProgress,
+    Divider,
+    IconButton,
+    useTheme
+} from '@mui/material';
+import Plot from 'react-plotly.js';
+import SearchIcon from '@mui/icons-material/Search';
+import WarningIcon from '@mui/icons-material/Warning';
+import TimelineIcon from '@mui/icons-material/Timeline';
 
-function DisasterPrediction() {
-  const [location, setLocation] = useState('');
-  const [predictionData, setPredictionData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('overview');
+const DisasterPrediction = () => {
+    const theme = useTheme();
+    const [predictions, setPredictions] = useState(null);
+    const [graphs, setGraphs] = useState(null);
+    const [country, setCountry] = useState('');
+    const [year, setYear] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: '',
+        severity: 'error'
+    });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+    const handleCloseSnackbar = () => {
+        setSnackbar(prev => ({ ...prev, open: false }));
+    };
 
-    try {
-      const response = await fetch('http://localhost:5000/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          location,
-        }),
-      });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
 
-      if (!response.ok) {
-        throw new Error('Failed to get prediction');
-      }
+        try {
+            const response = await fetch('http://localhost:5000/api/disaster-predictions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ country, year: parseInt(year) }),
+            });
 
-      const data = await response.json();
-      setPredictionData(data);
-      setActiveTab('overview');
-    } catch (err) {
-      setError('Failed to get prediction. Please try again.');
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+            const data = await response.json();
 
-  return (
-    <div className="disaster-prediction">
-      <div className="prediction-hero">
-        <h1>Disaster Prediction Analysis</h1>
-        <p>Historical Data Analysis and Future Predictions</p>
-      </div>
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to fetch predictions');
+            }
 
-      <div className="prediction-container">
-        {/* Input Form */}
-        <div className="prediction-form-card">
-          <h2>Enter Analysis Location</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="location">Country/Region:</label>
-              <input
-                type="text"
-                id="location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Enter country name"
-                required
-              />
-            </div>
+            setPredictions(data.predictions);
+            setGraphs(data.graphs);
 
-            <button type="submit" className="predict-button" disabled={loading}>
-              {loading ? (
-                <>
-                  <i className="fas fa-spinner fa-spin"></i> Analyzing Data...
-                </>
-              ) : (
-                <>
-                  <i className="fas fa-analytics"></i> Analyze Disasters
-                </>
-              )}
-            </button>
-          </form>
+            if (data.predictions.length === 0) {
+                setSnackbar({
+                    open: true,
+                    message: `No predictions found for ${country} in year ${year}`,
+                    severity: 'info'
+                });
+            }
+        } catch (err) {
+            setError(err.message);
+            setSnackbar({
+                open: true,
+                message: err.message,
+                severity: 'error'
+            });
+            console.error('Error:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-          {error && (
-            <div className="error-message">
-              <i className="fas fa-exclamation-circle"></i> {error}
-            </div>
-          )}
-        </div>
+    const getRiskLevelColor = (riskLevel) => {
+        switch (riskLevel.toLowerCase()) {
+            case 'high':
+                return theme.palette.error.main;
+            case 'medium':
+                return theme.palette.warning.main;
+            default:
+                return theme.palette.success.main;
+        }
+    };
 
-        {/* Results Section */}
-        {predictionData && (
-          <div className="prediction-results">
-            <h2>Analysis Results for {predictionData.location}</h2>
+    return (
+        <Container maxWidth="lg">
+            <Box sx={{ py: 4 }}>
+                <Paper 
+                    elevation={3} 
+                    sx={{ 
+                        p: 4, 
+                        mb: 4, 
+                        background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
+                        color: 'white'
+                    }}
+                >
+                    <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+                        Disaster Prediction Analysis
+                    </Typography>
+                    <Typography variant="h6" sx={{ opacity: 0.9 }}>
+                        Analyze potential natural disasters based on historical data
+                    </Typography>
+                </Paper>
 
-            {/* Navigation Tabs */}
-            <div className="results-tabs">
-              <button
-                className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
-                onClick={() => setActiveTab('overview')}
-              >
-                <i className="fas fa-chart-pie"></i> Overview
-              </button>
-              <button
-                className={`tab-button ${activeTab === 'predictions' ? 'active' : ''}`}
-                onClick={() => setActiveTab('predictions')}
-              >
-                <i className="fas fa-chart-line"></i> Predictions
-              </button>
-              <button
-                className={`tab-button ${activeTab === 'analysis' ? 'active' : ''}`}
-                onClick={() => setActiveTab('analysis')}
-              >
-                <i className="fas fa-microscope"></i> Detailed Analysis
-              </button>
-            </div>
+                <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
+                    <form onSubmit={handleSubmit}>
+                        <Grid container spacing={3} alignItems="center">
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    label="Country"
+                                    value={country}
+                                    onChange={(e) => setCountry(e.target.value)}
+                                    required
+                                    variant="outlined"
+                                    placeholder="Enter country name"
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    label="Year"
+                                    type="number"
+                                    value={year}
+                                    onChange={(e) => setYear(e.target.value)}
+                                    required
+                                    variant="outlined"
+                                    InputProps={{ 
+                                        inputProps: { 
+                                            min: 2024, 
+                                            max: 2035 
+                                        }
+                                    }}
+                                    placeholder="Enter year (2024-2035)"
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    disabled={loading}
+                                    fullWidth
+                                    size="large"
+                                    startIcon={loading ? <CircularProgress size={20} /> : <SearchIcon />}
+                                    sx={{ height: '56px' }}
+                                >
+                                    {loading ? 'Analyzing...' : 'Analyze Predictions'}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </Paper>
 
-            {/* Overview Tab */}
-            {activeTab === 'overview' && (
-              <div className="tab-content">
-                <div className="result-section summary">
-                  <h3><i className="fas fa-info-circle"></i> Data Summary</h3>
-                  <div className="summary-grid">
-                    <div className="summary-card">
-                      <i className="fas fa-database"></i>
-                      <h4>Total Records</h4>
-                      <p>{predictionData.summary.total_records}</p>
-                    </div>
-                    <div className="summary-card">
-                      <i className="fas fa-calendar-alt"></i>
-                      <h4>Data Range</h4>
-                      <p>{predictionData.summary.data_year_range}</p>
-                    </div>
-                    <div className="summary-card">
-                      <i className="fas fa-exclamation-triangle"></i>
-                      <h4>Most Common Disaster</h4>
-                      <p>{predictionData.summary.most_common_disaster}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="result-section visualizations">
-                  <h3><i className="fas fa-chart-bar"></i> Disaster Distribution</h3>
-                  <img
-                    src={`data:image/png;base64,${predictionData.plots.disaster_types}`}
-                    alt="Disaster Type Distribution"
-                    className="prediction-plot"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Predictions Tab */}
-            {activeTab === 'predictions' && (
-              <div className="tab-content">
-                <div className="result-section trends">
-                  <h3><i className="fas fa-chart-line"></i> Probability Trends</h3>
-                  <img
-                    src={`data:image/png;base64,${predictionData.plots.trends}`}
-                    alt="Probability Trends"
-                    className="prediction-plot"
-                  />
-                </div>
-
-                <div className="result-section predictions">
-                  <h3><i className="fas fa-list-alt"></i> Detailed Predictions</h3>
-                  {predictionData.predictions.length > 0 ? (
-                    Object.entries(
-                      predictionData.predictions.reduce((acc, pred) => {
-                        if (!acc[pred.year]) acc[pred.year] = [];
-                        acc[pred.year].push(pred);
-                        return acc;
-                      }, {})
-                    ).map(([year, yearPredictions]) => (
-                      <div key={year} className="year-predictions">
-                        <h4><i className="far fa-calendar"></i> {year}</h4>
-                        <div className="predictions-grid">
-                          {yearPredictions.map((pred, index) => (
-                            <div
-                              key={index}
-                              className={`prediction-card ${pred.risk_level.toLowerCase()}`}
+                {error && (
+                    <Alert 
+                        severity="error" 
+                        sx={{ mb: 4 }}
+                        action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => setError(null)}
                             >
-                              <h5>{pred.disaster_type}</h5>
-                              <p className="probability">{pred.probability.toFixed(1)}% Probability</p>
-                              <span className="risk-badge">{pred.risk_level} Risk</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="no-predictions">No significant predictions found.</p>
-                  )}
-                </div>
-              </div>
-            )}
+                                <WarningIcon />
+                            </IconButton>
+                        }
+                    >
+                        {error}
+                    </Alert>
+                )}
 
-            {/* Analysis Tab */}
-            {activeTab === 'analysis' && (
-              <div className="tab-content">
-                <div className="result-section terminal-output">
-                  <h3><i className="fas fa-terminal"></i> Analysis Log</h3>
-                  <pre>{predictionData.terminal_output}</pre>
-                </div>
+                {predictions && predictions.length > 0 && (
+                    <>
+                        <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 3 }}>
+                            Prediction Results
+                        </Typography>
+                        <Grid container spacing={3}>
+                            {predictions.map((prediction, index) => (
+                                <Grid item xs={12} sm={6} md={4} key={index}>
+                                    <Card 
+                                        elevation={3}
+                                        sx={{ 
+                                            height: '100%',
+                                            transition: 'transform 0.2s',
+                                            '&:hover': {
+                                                transform: 'scale(1.02)'
+                                            }
+                                        }}
+                                    >
+                                        <CardContent>
+                                            <Typography 
+                                                variant="h6" 
+                                                gutterBottom 
+                                                color="primary"
+                                            >
+                                                {prediction.disasterType}
+                                            </Typography>
+                                            <Divider sx={{ my: 1 }} />
+                                            <Typography variant="body1" sx={{ mb: 1 }}>
+                                                Probability: {prediction.probability.toFixed(1)}%
+                                            </Typography>
+                                            <Typography 
+                                                variant="body1"
+                                                sx={{ 
+                                                    color: getRiskLevelColor(prediction.riskLevel),
+                                                    fontWeight: 'bold'
+                                                }}
+                                            >
+                                                Risk Level: {prediction.riskLevel}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </>
+                )}
 
-                <div className="result-section probabilities">
-                  <h3><i className="fas fa-percentage"></i> Annual Probabilities</h3>
-                  <div className="probabilities-grid">
-                    {Object.entries(predictionData.probabilities.by_type).map(([type, prob]) => (
-                      <div key={type} className="probability-card">
-                        <h4>{type}</h4>
-                        <p className="probability">{prob.toFixed(1)}%</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+                {graphs && graphs.length > 0 && (
+                    <Box sx={{ mt: 6 }}>
+                        <Typography 
+                            variant="h5" 
+                            gutterBottom 
+                            sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: 1 
+                            }}
+                        >
+                            <TimelineIcon color="primary" />
+                            Visualization Analysis
+                        </Typography>
+                        <Paper elevation={2} sx={{ p: 2 }}>
+                            {graphs.map((graph, index) => (
+                                <Plot
+                                    key={index}
+                                    data={graph.data}
+                                    layout={{
+                                        ...graph.layout,
+                                        autosize: true,
+                                        height: 500,
+                                        margin: { l: 50, r: 50, t: 50, b: 50 }
+                                    }}
+                                    style={{ width: '100%' }}
+                                    config={{ responsive: true }}
+                                />
+                            ))}
+                        </Paper>
+                    </Box>
+                )}
+
+                <Snackbar
+                    open={snackbar.open}
+                    autoHideDuration={6000}
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert 
+                        onClose={handleCloseSnackbar} 
+                        severity={snackbar.severity}
+                        sx={{ width: '100%' }}
+                    >
+                        {snackbar.message}
+                    </Alert>
+                </Snackbar>
+            </Box>
+        </Container>
+    );
+};
 
 export default DisasterPrediction;
