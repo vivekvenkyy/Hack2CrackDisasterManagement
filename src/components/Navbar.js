@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './Navbar.css';
+import { Nav } from 'react-bootstrap';
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,6 +50,18 @@ function Navbar() {
             <Link to="/mental-health" className={location.pathname === '/mental-health' ? 'active' : ''}>
               <i className="fas fa-heart"></i>
               <span>Mental Health</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/Realtime">
+              <i className="fas fa-comment"></i>
+              <span>Realtime</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/TweetRealTime">
+              <i className="fas fa-newspaper"></i>
+              <span>Tweets</span>
             </Link>
           </li>
           <li className="emergency-nav-button">

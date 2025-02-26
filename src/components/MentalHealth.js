@@ -45,19 +45,6 @@ function MentalHealth() {
             <button className="contact-btn">Join Community</button>
           </div>
 
-          <div className="service-card">
-            <i className="fas fa-chalkboard-teacher"></i>
-            <h3>Workshops & Awareness Programs</h3>
-            <p>Participate in sessions that provide insights on trauma recovery, mindfulness, and emotional strength.</p>
-            <button className="contact-btn">Register Now</button>
-          </div>
-
-          <div className="service-card">
-            <i className="fas fa-first-aid"></i>
-            <h3>Emergency Mental Health First Aid</h3>
-            <p>Get quick tips on how to help yourself and others during moments of emotional distress.</p>
-            <button className="contact-btn">Get Help</button>
-          </div>
         </div>
       </section>
 
