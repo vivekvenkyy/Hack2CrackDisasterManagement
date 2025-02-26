@@ -29,6 +29,8 @@ from visualizations import (
     generate_subreddit_distribution,
     image_to_base64
 )
+import pickle
+import numpy as np
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -37,6 +39,41 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 # Enable CORS for all domains (for development)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+# Define the flood features
+FLOOD_FEATURES = [
+    'MonsoonIntensity', 'TopographyDrainage', 'RiverManagement',
+    'Deforestation', 'Urbanization', 'ClimateChange', 'DamsQuality',
+    'Siltation', 'AgriculturalPractices', 'Encroachments',
+    'IneffectiveDisasterPreparedness', 'DrainageSystems',
+    'CoastalVulnerability', 'Landslides', 'Watersheds',
+    'DeterioratingInfrastructure', 'PopulationScore', 'WetlandLoss',
+    'InadequatePlanning', 'PoliticalFactors'
+]
+
+# Global variables for models
+flood_model = None
+drought_model = None
+
+def load_models():
+    global flood_model, drought_model
+    try:
+        # Load flood model
+        flood_model_path = os.path.join(os.path.dirname(__file__), 'models\\xgboost_flood_model.pkl')
+        flood_model = joblib.load(flood_model_path)
+        logger.info("Flood model loaded successfully")
+
+        # Load drought model
+        drought_model_path = os.path.join(os.path.dirname(__file__), 'models\\random_forest_model.pkl')
+        drought_model = joblib.load(drought_model_path)
+        logger.info("Drought model loaded successfully")
+
+    except Exception as e:
+        logger.error(f"Error loading models: {str(e)}")
+        raise
+
+# Load models when the app starts
+load_models()
 
 @app.route('/api/disaster-predictions', methods=['POST'])
 def get_predictions():
@@ -100,14 +137,6 @@ def get_predictions():
 def health_check():
     return jsonify({'status': 'healthy'}), 200
 
-# Load the saved XGBoost model
-try:
-    flood_model = joblib.load('models/xgboost_flood_model.pkl')
-    print("XGBoost model loaded successfully")
-except Exception as e:
-    print(f"Error loading model: {str(e)}")
-    traceback.print_exc()
-
 @app.route('/api/predict-flood', methods=['POST'])
 def predict_flood():
     try:
@@ -116,21 +145,88 @@ def predict_flood():
         if not data:
             return jsonify({'error': 'No data received'}), 400
 
-        # Create DataFrame with the input data
+        # Verify all required features are present
+        missing_features = [feat for feat in FLOOD_FEATURES if feat not in data]
+        if missing_features:
+            return jsonify({
+                'error': f'Missing required features: {", ".join(missing_features)}'
+            }), 400
+
+        # Create input DataFrame with proper feature order
         input_data = pd.DataFrame({
-            feature: [float(data[feature])] for feature in data.keys()
+            feature: [float(data[feature])] for feature in FLOOD_FEATURES
         })
+
+        # Convert DataFrame to numpy array
+        input_array = input_data.values
         
-        # For XGBoost models, we need to convert to DMatrix
-        dmatrix = xgb.DMatrix(input_data)
+        # Make prediction directly using the model
+        prediction = flood_model.predict(input_array)[0]
         
-        # Make prediction
-        prediction = flood_model.predict(dmatrix)[0]
-        
-        return jsonify({'prediction': float(prediction)})
+        return jsonify({
+            'success': True,
+            'prediction': float(prediction),
+            'probability': float(prediction)
+        })
+
     except Exception as e:
         logger.error(f"Error in predict_flood: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/predict-drought', methods=['POST'])
+def predict_drought():
+    try:
+        data = request.json
+        
+        if not data:
+            return jsonify({'error': 'No data received'}), 400
+
+        # Required features for drought prediction
+        required_features = ['prectot', 't2mwet', 'ws10m_max', 'ws10m_min', 'ws50m_min', 'month']
+        
+        # Check if all required features are present
+        missing_features = [feat for feat in required_features if feat not in data]
+        if missing_features:
+            return jsonify({
+                'error': f'Missing required features: {", ".join(missing_features)}'
+            }), 400
+
+        # Create input array for prediction
+        input_data = pd.DataFrame([{
+            'prectot': float(data['prectot']),
+            't2mwet': float(data['t2mwet']),
+            'ws10m_max': float(data['ws10m_max']),
+            'ws10m_min': float(data['ws10m_min']),
+            'ws50m_min': float(data['ws50m_min']),
+            'month': int(data['month'])
+        }])
+
+        # Make prediction
+        prediction = drought_model.predict(input_data)[0]
+        
+        return jsonify({
+            'success': True,
+            'prediction': float(prediction)
+        })
+
+    except Exception as e:
+        logger.error(f"Error in predict_drought: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/features', methods=['GET'])
+def get_features():
+    """Endpoint to get the list of required features for both models"""
+    return jsonify({
+        'flood_features': FLOOD_FEATURES,
+        'drought_features': ['prectot', 't2mwet', 'ws10m_max', 'ws10m_min', 'ws50m_min', 'month']
+    })
 
 # Reddit API Credentials
 reddit_credentials = {

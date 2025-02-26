@@ -1,4 +1,5 @@
 import './MentalHealth.css';
+import React from 'react';
 
 function MentalHealth() {
   return (
