@@ -59,17 +59,13 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/TweetRealTime">
+            <Link to="/tweet-prediction" className={location.pathname === '/tweet-prediction' ? 'active' : ''}>
               <i className="fas fa-newspaper"></i>
-              <span>Tweets</span>
+              <span>Tweet Prediction</span>
             </Link>
           </li>
-          <li className="emergency-nav-button">
-            <Link to="/emergency">
-              <i className="fas fa-phone-alt"></i>
-              <span>Emergency</span>
-            </Link>
-          </li>
+
+
         </ul>
       </div>
     </nav>
