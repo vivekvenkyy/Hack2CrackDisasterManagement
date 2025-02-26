@@ -68,6 +68,17 @@ def load_models():
         drought_model = joblib.load(drought_model_path)
         logger.info("Drought model loaded successfully")
 
+        # Add this after loading the drought model
+        if hasattr(drought_model, 'feature_names_in_'):
+            print("Expected features for drought model:", drought_model.feature_names_in_)
+        else:
+            # For older scikit-learn versions
+            print("Model features cannot be automatically detected")
+
+        # You can also check the number of features the model expects
+        n_features = drought_model.n_features_in_ if hasattr(drought_model, 'n_features_in_') else None
+        print("Number of features expected:", n_features)
+
     except Exception as e:
         logger.error(f"Error loading models: {str(e)}")
         raise
@@ -185,8 +196,24 @@ def predict_drought():
         if not data:
             return jsonify({'error': 'No data received'}), 400
 
-        # Required features for drought prediction
-        required_features = ['prectot', 't2mwet', 'ws10m_max', 'ws10m_min', 'ws50m_min', 'month']
+        # All 15 features from train_timeseries.csv (excluding the 6 mentioned)
+        required_features = [
+            'fips',
+            'PS',
+            'QV2M',
+            'T2M',
+            'T2MDEW',
+            'T2M_MAX',
+            'T2M_MIN',
+            'T2M_RANGE',
+            'TS',
+            'WS10M',
+            'WS10M_RANGE',
+            'WS50M',
+            'WS50M_MAX',
+            'WS50M_RANGE',
+            'date'
+        ]
         
         # Check if all required features are present
         missing_features = [feat for feat in required_features if feat not in data]
@@ -196,14 +223,16 @@ def predict_drought():
             }), 400
 
         # Create input array for prediction
-        input_data = pd.DataFrame([{
-            'prectot': float(data['prectot']),
-            't2mwet': float(data['t2mwet']),
-            'ws10m_max': float(data['ws10m_max']),
-            'ws10m_min': float(data['ws10m_min']),
-            'ws50m_min': float(data['ws50m_min']),
-            'month': int(data['month'])
-        }])
+        input_dict = {}
+        for feature in required_features:
+            if feature == 'date':
+                # Convert date to a numerical value (days since epoch)
+                date_obj = pd.to_datetime(data[feature])
+                input_dict[feature] = date_obj.timestamp() / (24 * 60 * 60)  # Convert to days
+            else:
+                input_dict[feature] = float(data[feature])
+
+        input_data = pd.DataFrame([input_dict])
 
         # Make prediction
         prediction = drought_model.predict(input_data)[0]
@@ -215,6 +244,7 @@ def predict_drought():
 
     except Exception as e:
         logger.error(f"Error in predict_drought: {str(e)}")
+        traceback.print_exc()  # This will help debug the error
         return jsonify({
             'success': False,
             'error': str(e)
