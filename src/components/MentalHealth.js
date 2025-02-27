@@ -1,74 +1,204 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Card, Form, Button, Spinner } from 'react-bootstrap';
+import { FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
 import './MentalHealth.css';
-import React from 'react';
 
 function MentalHealth() {
-  return (
-    <div className="mental-health">
-      <div className="mental-health-hero">
-        <h1>Mental Health Support</h1>
-        <h2>You're Not Alone</h2>
-        <p className="hero-description">
-          Disasters can be overwhelming, not just physically but emotionally and mentally as well. 
-          <strong> Apada Mitra</strong> is here to provide a safe space and valuable resources to help 
-          you cope with stress, anxiety, and trauma in times of crisis.
-        </p>
-      </div>
+    const [messages, setMessages] = useState([]);
+    const [currentMessage, setCurrentMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const messagesEndRef = useRef(null);
 
-      <section className="why-matters">
-        <h2>Why Mental Health Matters</h2>
-        <p>
-          During and after disasters, individuals may experience fear, uncertainty, grief, and distress. 
-          Addressing mental health is just as crucial as physical safety, ensuring long-term recovery and well-being.
-        </p>
-      </section>
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
-      <section className="support-services">
-        <h2>How We Can Help</h2>
-        <div className="services-container">
-          <div className="service-card">
-            <i className="fas fa-phone-alt"></i>
-            <h3>24/7 Helpline Support</h3>
-            <p>Access confidential mental health helplines to talk to professionals anytime you need assistance.</p>
-            <button className="contact-btn">Call Now</button>
-          </div>
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
-          <div className="service-card">
-            <i className="fas fa-heart"></i>
-            <h3>Self-Care & Coping Strategies</h3>
-            <p>Learn practical techniques to manage stress, build resilience, and maintain emotional well-being.</p>
-            <button className="contact-btn">Learn More</button>
-          </div>
+    const cleanResponse = (text) => {
+        // Remove the thinking process enclosed in <think> tags
+        return text.replace(/<think>.*?<\/think>/s, '').trim();
+    };
 
-          <div className="service-card">
-            <i className="fas fa-users"></i>
-            <h3>Community Support & Counseling</h3>
-            <p>Connect with support groups, mental health professionals, and online forums to share your experiences.</p>
-            <button className="contact-btn">Join Community</button>
-          </div>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!currentMessage.trim()) return;
 
+        setError(null);
+        const userMessage = { text: currentMessage, sender: 'user' };
+        setMessages(prev => [...prev, userMessage]);
+        setCurrentMessage('');
+        setIsLoading(true);
+
+        try {
+            console.log('Sending request to Ollama...');
+            const response = await fetch('http://localhost:11434/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model: "deepseek-mentalhealth",
+                    messages: [
+                        {
+                            role: "system",
+                            content: "You are a compassionate mental health support assistant. Provide empathetic, supportive responses while maintaining appropriate boundaries and encouraging professional help when needed. Respond directly without showing your thinking process."
+                        },
+                        {
+                            role: "user",
+                            content: currentMessage
+                        }
+                    ],
+                    stream: false
+                })
+            });
+
+            console.log('Response status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Response data:', data);
+
+            // Clean the response before displaying
+            const cleanedResponse = cleanResponse(data.message?.content || data.response);
+            
+            const botMessage = { 
+                text: cleanedResponse, 
+                sender: 'bot' 
+            };
+            setMessages(prev => [...prev, botMessage]);
+
+        } catch (error) {
+            console.error('Error details:', error);
+            setError(error.message || 'Failed to get response from the AI model');
+            const errorMessage = { 
+                text: 'Sorry, I encountered an error. Please try again.', 
+                sender: 'bot' 
+            };
+            setMessages(prev => [...prev, errorMessage]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="mental-health-page">
+            <Container className="mental-health-container">
+                <Card className="chat-card shadow-lg">
+                    <Card.Header className="chat-header">
+                        <div className="header-content">
+                            <h2>Mental Health Support</h2>
+                            <p>Your safe space to talk about mental health</p>
+                        </div>
+                    </Card.Header>
+                    
+                    <Card.Body className="chat-body">
+                        <div className="chat-messages" id="chat-container">
+                            {messages.length === 0 && (
+                                <div className="welcome-message">
+                                    <div className="welcome-icon">
+                                        <FaRobot size={40} />
+                                    </div>
+                                    <h3>Welcome to Mental Health Support</h3>
+                                    <p>Feel free to share your thoughts or concerns. 
+                                       I'm here to listen and support you.</p>
+                                    <div className="suggested-messages">
+                                        <Button 
+                                            variant="outline-primary" 
+                                            onClick={() => setCurrentMessage("I'm feeling anxious")}
+                                        >
+                                            I'm feeling anxious
+                                        </Button>
+                                        <Button 
+                                            variant="outline-primary"
+                                            onClick={() => setCurrentMessage("I need someone to talk to")}
+                                        >
+                                            I need someone to talk to
+                                        </Button>
+                                        <Button 
+                                            variant="outline-primary"
+                                            onClick={() => setCurrentMessage("How can I improve my mental health?")}
+                                        >
+                                            How can I improve my mental health?
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {messages.map((message, index) => (
+                                <div
+                                    key={index}
+                                    className={`message-wrapper ${message.sender}-wrapper`}
+                                >
+                                    <div className="message-icon">
+                                        {message.sender === 'bot' ? 
+                                            <FaRobot /> : 
+                                            <FaUser />
+                                        }
+                                    </div>
+                                    <div className={`message ${message.sender}-message`}>
+                                        <div className="message-content">
+                                            {message.text}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {isLoading && (
+                                <div className="message-wrapper bot-wrapper">
+                                    <div className="message-icon">
+                                        <FaRobot />
+                                    </div>
+                                    <div className="message bot-message">
+                                        <div className="message-content typing-indicator">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} />
+                        </div>
+
+                        <Form onSubmit={handleSubmit} className="chat-input-form">
+                            <div className="input-group">
+                                <Form.Control
+                                    type="text"
+                                    value={currentMessage}
+                                    onChange={(e) => setCurrentMessage(e.target.value)}
+                                    placeholder="Type your message here..."
+                                    disabled={isLoading}
+                                    className="chat-input"
+                                />
+                                <Button 
+                                    type="submit" 
+                                    className="send-button"
+                                    disabled={isLoading || !currentMessage.trim()}
+                                >
+                                    {isLoading ? (
+                                        <Spinner 
+                                            animation="border" 
+                                            size="sm" 
+                                            role="status"
+                                        />
+                                    ) : (
+                                        <FaPaperPlane />
+                                    )}
+                                </Button>
+                            </div>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
-      </section>
-
-      <section className="support-message">
-        <h2>You Are Not Alone</h2>
-        <p>
-          It's okay to seek help. Mental well-being is a journey, and <strong>Apada Mitra</strong> is 
-          here to support you every step of the way.
-        </p>
-        <div className="emergency-contact">
-          <p>
-            If you or someone you know is struggling, reach out to our mental health support team or contact 
-            <strong> [your helpline/contact details]</strong> for immediate assistance.
-          </p>
-          <button className="emergency-btn">Get Immediate Help</button>
-        </div>
-      </section>
-
-      <div className="closing-message">
-        <h3>Together, we can heal and rebuild stronger.</h3>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default MentalHealth;
