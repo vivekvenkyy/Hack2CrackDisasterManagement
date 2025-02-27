@@ -27,14 +27,12 @@ function MentalHealth() {
         e.preventDefault();
         if (!currentMessage.trim()) return;
 
-        setError(null);
         const userMessage = { text: currentMessage, sender: 'user' };
         setMessages(prev => [...prev, userMessage]);
         setCurrentMessage('');
         setIsLoading(true);
 
         try {
-            console.log('Sending request to Ollama...');
             const response = await fetch('http://localhost:11434/api/chat', {
                 method: 'POST',
                 headers: {
@@ -45,7 +43,7 @@ function MentalHealth() {
                     messages: [
                         {
                             role: "system",
-                            content: "You are a compassionate mental health support assistant. Provide empathetic, supportive responses while maintaining appropriate boundaries and encouraging professional help when needed. Respond directly without showing your thinking process."
+                            content: "You are a warm and understanding chatbot designed to engage in natural conversations. Begin chats normally without assuming anything about the user's emotions. If a user explicitly mentions feeling sad, depressed, or needing mental support, respond with reassurance: 'Thank you for reaching out. I'm here for you. Healing is a process that takes time, and it's okay to feel what you need in the moments after a disaster. You're not alone—there are people who care deeply about you and want to support you through this.After offering this initial reassurance, gently ask what happened and listen attentively. Respond based on their specific situation, providing comfort and understanding rather than immediate coping suggestions. Keep the conversation natural, engaging, and empathetic.Your goal is to support people who have experienced trauma from natural disasters or are struggling with depression. Respond empathetically, using positive and reassuring language. Avoid giving medical diagnoses or medication advice. Always encourage seeking professional or community support. If a user expresses thoughts of self-harm, gently urge them to contact a crisis helpline or a trusted person."
                         },
                         {
                             role: "user",
@@ -56,32 +54,43 @@ function MentalHealth() {
                 })
             });
 
-            console.log('Response status:', response.status);
-            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('Response data:', data);
+            
+            if (!data || (!data.message && !data.response)) {
+                throw new Error('Invalid response from server');
+            }
 
-            // Clean the response before displaying
-            const cleanedResponse = cleanResponse(data.message?.content || data.response);
+            const botResponse = data.message?.content || data.response;
+            if (!botResponse) {
+                throw new Error('No response content received');
+            }
+
+            // Clean the response and add it to messages
+            const cleanedResponse = botResponse.replace(/<think>.*?<\/think>/s, '').trim();
             
             const botMessage = { 
-                text: cleanedResponse, 
+                text: cleanedResponse || "I apologize, but I'm having trouble formulating a response. Could you please rephrase your message?", 
                 sender: 'bot' 
             };
             setMessages(prev => [...prev, botMessage]);
 
         } catch (error) {
-            console.error('Error details:', error);
-            setError(error.message || 'Failed to get response from the AI model');
-            const errorMessage = { 
-                text: 'Sorry, I encountered an error. Please try again.', 
-                sender: 'bot' 
-            };
-            setMessages(prev => [...prev, errorMessage]);
+            console.error('Chat Error:', error);
+            // Only add error message if it's not already the last message
+            setMessages(prev => {
+                const lastMessage = prev[prev.length - 1];
+                if (lastMessage?.text !== 'Sorry, I encountered an error. Please try again.') {
+                    return [...prev, {
+                        text: 'I apologize, but I am having trouble connecting. Please try again in a moment.',
+                        sender: 'bot'
+                    }];
+                }
+                return prev;
+            });
         } finally {
             setIsLoading(false);
         }
