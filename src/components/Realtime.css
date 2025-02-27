@@ -1,7 +1,14 @@
 .realtime-container {
-    min-height: 100vh;
+    min-height: calc(100vh - 60px);
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 2rem;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+.realtime-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
 .realtime-title {
@@ -64,8 +71,6 @@
 }
 
 .prediction-card {
-    max-width: 1200px;
-    margin: 0 auto;
     border: none;
     border-radius: 15px;
     overflow: hidden;
@@ -190,7 +195,12 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .realtime-container {
-        padding: 1rem;
+        margin-top: 56px;
+        padding: 10px;
+    }
+    
+    .realtime-content {
+        padding: 10px 0;
     }
 
     .realtime-title {

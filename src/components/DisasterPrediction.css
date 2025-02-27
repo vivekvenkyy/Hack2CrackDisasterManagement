@@ -200,3 +200,91 @@
     grid-template-columns: 1fr;
   }
 }
+
+.disaster-prediction-page {
+    min-height: calc(100vh - 60px);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin-top: 60px;
+}
+
+.prediction-card {
+    max-width: 900px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.prediction-card .card-header {
+    background: linear-gradient(45deg, #1976d2 0%, #2196f3 100%);
+    border: none;
+}
+
+.region-btn {
+    min-width: 150px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.region-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.results-card {
+    border: none;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.disaster-prediction {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+}
+
+.disaster-prediction h5 {
+    color: #1976d2;
+    margin-bottom: 1rem;
+}
+
+.disaster-prediction p {
+    margin-bottom: 0.5rem;
+}
+
+.disaster-prediction strong {
+    color: #555;
+}
+
+/* Form styling */
+.form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.form-control, .form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 0.2rem rgba(33,150,243,0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .disaster-prediction-page {
+        padding: 1rem;
+    }
+    
+    .region-btn {
+        min-width: 120px;
+        padding: 0.5rem 1rem;
+    }
+}

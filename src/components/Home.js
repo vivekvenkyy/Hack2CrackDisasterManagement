@@ -1,7 +1,15 @@
 import './Home.css';
 import disasterImage from '../assets/dis-img.jpg';  // Add this import
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleEmergencyClick = () => {
+    // Navigate to emergency contacts page
+    navigate('/emergency-contacts');
+  };
+
   return (
     <div className="home">
       <div className="hero-section">
@@ -31,12 +39,22 @@ function Home() {
             <h3>Real-Time Alerts & Warnings</h3>
             <p>Stay informed with up-to-date notifications on natural disasters, extreme weather conditions, and emergency situations.</p>
           </div>
-          <div className="service-card">
-            <i className="fas fa-book-medical"></i>
-            <h3>Emergency Resources</h3>
-            <p>Access essential guides, safety tips, and step-by-step preparedness plans for different types of disasters.</p>
+          <div 
+            className="service-card transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer bg-gradient-to-br from-blue-800 to-blue-600"
+            onClick={handleEmergencyClick} 
+          >
+            <div className="p-6">
+              <i className="fas fa-book-medical text-4xl text-white mb-4"></i>
+              <h3 className="text-xl font-bold text-white mb-2">Emergency Resources</h3>
+              <p className="text-blue-100">
+                Access essential emergency contacts, safety guides, and preparedness plans for different types of disasters.
+              </p>
+              <div className="mt-4 text-white flex items-center">
+                <span>View Directory</span>
+                <span className="ml-2">→</span>
+              </div>
+            </div>
           </div>
-
           <div className="service-card">
             <i className="fas fa-users"></i>
             <h3>Community Support & Volunteering</h3>

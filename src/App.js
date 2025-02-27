@@ -6,6 +6,7 @@ import DisasterPrediction from './components/DisasterPrediction';
 import MentalHealth from './components/MentalHealth';
 import RealTime from './components/Realtime';
 import TweetPrediction from './components/TweetPrediction';
+import EmergencyContacts from './components/EmergencyContacts';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/mental-health" element={<MentalHealth />} />
                     <Route path="/realtime" element={<RealTime />} />
                     <Route path="/tweet-prediction" element={<TweetPrediction />} />
+                    <Route path="/emergency-contacts" element={<EmergencyContacts />} />
                 </Routes>
             </div>
         </Router>

@@ -171,12 +171,8 @@ function RealTime() {
     ];
 
     return (
-        <Container fluid className="realtime-container py-5">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
+        <Container fluid className="realtime-container">
+            <div className="realtime-content">
                 <Card className="prediction-card shadow-lg">
                     <Card.Header className="bg-gradient text-white text-center py-4">
                         <h2 className="mb-0">Disaster Prediction System</h2>
@@ -319,7 +315,7 @@ function RealTime() {
                         )}
                     </Card.Body>
                 </Card>
-            </motion.div>
+            </div>
         </Container>
     );
 }
