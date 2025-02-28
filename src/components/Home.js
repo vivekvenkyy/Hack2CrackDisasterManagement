@@ -1,6 +1,8 @@
 import './Home.css';
 import disasterImage from '../assets/dis-img.jpg';  // Add this import
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 function Home() {
   const navigate = useNavigate();
@@ -8,6 +10,10 @@ function Home() {
   const handleEmergencyClick = () => {
     // Navigate to emergency contacts page
     navigate('/emergency-contacts');
+  };
+
+  const handleEducationalClick = () => {
+    navigate('/educational-awareness');
   };
 
   return (
@@ -55,15 +61,33 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="service-card">
-            <i className="fas fa-users"></i>
-            <h3>Community Support & Volunteering</h3>
-            <p>Connect with disaster relief organizations and volunteer to help those in need.</p>
+          <div 
+            className="service-card"
+            onClick={() => navigate('/community-support')}
+          >
+            <div className="p-6">
+              <i className="fas fa-hands-helping text-4xl text-white mb-4"></i>
+              <h3 className="text-xl font-bold text-white mb-2">Community Support & Volunteering</h3>
+              <p className="text-blue-100">
+                Connect with NGOs and volunteer organizations for disaster relief efforts.
+              </p>
+            </div>
           </div>
-          <div className="service-card">
-            <i className="fas fa-chalkboard-teacher"></i>
-            <h3>Educational Awareness & Training</h3>
-            <p>Learn about disaster preparedness through workshops, webinars, and informative articles.</p>
+          <div 
+            className="service-card transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer bg-gradient-to-br from-blue-800 to-blue-600"
+            onClick={handleEducationalClick}
+          >
+            <div className="p-6">
+              <i className="fas fa-book text-4xl text-white mb-4"></i>
+              <h3 className="text-xl font-bold text-white mb-2">Educational Awareness & Training</h3>
+              <p className="text-blue-100">
+                Access comprehensive guides and training materials for disaster preparedness and response.
+              </p>
+              <div className="mt-4 text-white flex items-center">
+                <span>Learn More</span>
+                <span className="ml-2">→</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -80,6 +104,132 @@ function Home() {
           <p>Stay alert, stay safe, and let's stand together in times of need.</p>
           <button className="cta-button">Contact Us</button>
         </div>
+      </section>
+
+      {/* Emergency Resources Section */}
+      <section className="resources-section">
+        <Container>
+          <h2 className="section-heading">
+            <i className="fas fa-first-aid section-icon"></i>
+            Emergency Resources
+          </h2>
+          <Row>
+            <Col md={4}>
+              <Card className="resource-card">
+                <Card.Body>
+                  <Card.Title>Emergency Contacts</Card.Title>
+                  <Card.Text>
+                    Quick access to emergency numbers, helplines, and local authorities for immediate assistance during disasters.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="resource-card">
+                <Card.Body>
+                  <Card.Title>First Aid Guide</Card.Title>
+                  <Card.Text>
+                    Essential first aid information and procedures for common emergency situations.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="resource-card">
+                <Card.Body>
+                  <Card.Title>Evacuation Plans</Card.Title>
+                  <Card.Text>
+                    Detailed evacuation routes and safety protocols for different types of disasters.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Community Support Section */}
+      <section className="community-section">
+        <Container>
+          <h2 className="section-heading">
+            <i className="fas fa-hands-helping section-icon"></i>
+            Community Support & Volunteering
+          </h2>
+          <Row>
+            <Col md={4}>
+              <Card className="community-card">
+                <Card.Body>
+                  <Card.Title>Volunteer Programs</Card.Title>
+                  <Card.Text>
+                    Join our volunteer network to help communities prepare for and recover from disasters.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="community-card">
+                <Card.Body>
+                  <Card.Title>Donation Centers</Card.Title>
+                  <Card.Text>
+                    Find information about donation centers and ways to contribute to disaster relief efforts.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="community-card">
+                <Card.Body>
+                  <Card.Title>Support Groups</Card.Title>
+                  <Card.Text>
+                    Connect with support groups and community organizations focused on disaster preparedness.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Educational Awareness Section */}
+      <section className="education-section">
+        <Container>
+          <h2 className="section-heading">
+            <i className="fas fa-graduation-cap section-icon"></i>
+            Educational Awareness & Training
+          </h2>
+          <Row>
+            <Col md={4}>
+              <Card className="education-card">
+                <Card.Body>
+                  <Card.Title>Training Programs</Card.Title>
+                  <Card.Text>
+                    Access disaster management training programs and certification courses.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="education-card">
+                <Card.Body>
+                  <Card.Title>Educational Resources</Card.Title>
+                  <Card.Text>
+                    Browse through our collection of educational materials and disaster preparedness guides.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="education-card">
+                <Card.Body>
+                  <Card.Title>Awareness Campaigns</Card.Title>
+                  <Card.Text>
+                    Learn about ongoing awareness campaigns and participate in community education initiatives.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
       <footer className="home-footer">

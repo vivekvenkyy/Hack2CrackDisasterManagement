@@ -182,3 +182,205 @@
   transform: translateY(-5px);
   transition: transform 0.3s ease;
 }
+
+/* Enhance section headings */
+.section-heading {
+    color: #1e3c72;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 3rem 0 2rem;
+    padding-bottom: 1rem;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    border-radius: 2px;
+}
+
+/* Section containers */
+.resources-section,
+.community-section,
+.education-section {
+    padding: 3rem 0;
+    background: #f8f9fa;
+    margin: 2rem 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Card styling */
+.resource-card,
+.community-card,
+.education-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.resource-card:hover,
+.community-card:hover,
+.education-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Card titles */
+.card-title {
+    color: #1e3c72;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Card content */
+.card-text {
+    color: #495057;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Section icons */
+.section-icon {
+    font-size: 2.5rem;
+    color: #1e3c72;
+    margin-bottom: 1.5rem;
+    display: block;
+    text-align: center;
+}
+
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-heading {
+        font-size: 1.75rem;
+        margin: 2rem 0 1.5rem;
+    }
+
+    .resource-card,
+    .community-card,
+    .education-card {
+        margin: 1rem 0;
+    }
+}
+
+/* Animation for section headings */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-heading {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Section background variations */
+.resources-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.community-section {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.education-section {
+    background: linear-gradient(135deg, #dee2e6 0%, #ced4da 100%);
+}
+
+/* Feature Section Styles */
+.feature-section {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    padding: 4rem 0;
+}
+
+.feature-card {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #ffffff;
+    display: block;
+}
+
+.feature-title {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.feature-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.feature-link {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.feature-link:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .feature-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-title {
+        font-size: 1.25rem;
+    }
+}
+
+/* Style for the Link component */
+a.text-decoration-none {
+    color: inherit;
+}
+
+a.text-decoration-none:hover {
+    color: inherit;
+    text-decoration: none;
+}
