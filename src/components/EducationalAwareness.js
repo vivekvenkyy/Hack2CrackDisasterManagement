@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EducationalAwareness.css';
 
+
+
 export default function EducationalAwareness() {
   const [activeDisaster, setActiveDisaster] = useState('earthquakes');
   const navigate = useNavigate();
@@ -32,54 +34,58 @@ export default function EducationalAwareness() {
         </div>
 
         <div className="disaster-content">
-          {activeDisaster === 'earthquakes' && (
-            <DisasterSection 
-              title="Earthquakes"
-              preparedness={[
-                "Secure Your Home: Anchor heavy furniture, use cabinet latches.",
-                "Emergency Kit: Water (3 days), food, flashlight, batteries, first aid, documents.",
-                "Family Plan: Establish meeting points, emergency contacts.",
-                "Building Safety: Follow earthquake-resistant codes."
-              ]}
-              safetyTips={[
-                "Indoors: Drop, Cover, Hold On under a sturdy table.",
-                "Outdoors: Move to open space, away from buildings.",
-                "In a Vehicle: Pull over safely, avoid overpasses."
-              ]}
-              postActions={[
-                "Check for injuries, provide first aid.",
-                "Inspect home for gas leaks, structural damage.",
-                "Stay informed about aftershocks."
-              ]}
-              media="Infographics on 'Drop, Cover, Hold', videos on earthquake preparedness."
-              documentLink="https://ndmindia.mha.gov.in"
-              documentText="NDMA Guidelines on Earthquake Management"
-            />
-          )}
+        {activeDisaster === 'earthquake' && (
+  <DisasterSection 
+    title="Earthquakes"
+    preparedness={[
+      "Secure Your Home: Anchor heavy furniture, use cabinet latches.",
+      "Emergency Kit: Water (3 days), food, flashlight, batteries, first aid, documents.",
+      "Family Plan: Establish meeting points, emergency contacts.",
+      "Building Safety: Follow earthquake-resistant codes."
+    ]}
+    safetyTips={[
+      "Indoors: Drop, Cover, Hold On under a sturdy table.",
+      "Outdoors: Move to open space, away from buildings.",
+      "In a Vehicle: Pull over safely, avoid overpasses."
+    ]}
+    postActions={[
+      "Check for injuries, provide first aid.",
+      "Inspect home for gas leaks, structural damage.",
+      "Stay informed about aftershocks."
+    ]}
+    media="Infographics on 'Drop, Cover, Hold', videos on earthquake preparedness."
+    documentLink="https://ndmindia.mha.gov.in"
+    documentText="NDMA Guidelines on Earthquake Management"
+    videoSrc="/videos/earthquake.mp4" // ✅ Updated to use public folder path
+  />
+    
+)}
 
-          {activeDisaster === 'floods' && (
-            <DisasterSection 
-              title="Floods"
-              preparedness={[
-                "Know Risk: Identify flood-prone zones, learn evacuation routes.",
-                "Protect Valuables: Keep documents in waterproof bags.",
-                "Home Prep: Elevate electrical appliances, install check valves."
-              ]}
-              safetyTips={[
-                "Evacuate early if warnings are issued.",
-                "Avoid floodwaters: Just 6 inches can knock you down.",
-                "Stay updated with weather reports."
-              ]}
-              postActions={[
-                "Return home only when authorities declare it safe.",
-                "Check for structural damage and avoid downed power lines.",
-                "Use clean, boiled water to prevent infections."
-              ]}
-              media="Flood zone maps, instructional flood safety videos."
-              documentLink="https://ndmindia.mha.gov.in"
-              documentText="NDMA Guidelines on Flood Management"
-            />
-          )}
+{activeDisaster === 'flood' && (
+  <DisasterSection 
+    title="Floods"
+    preparedness={[
+      "Identify safe evacuation routes and emergency contacts.",
+      "Keep emergency kits and waterproof important documents.",
+      "Elevate electrical appliances if in flood-prone areas."
+    ]}
+    safetyTips={[
+      "Avoid walking or driving through floodwaters.",
+      "Move to higher ground immediately.",
+      "Follow emergency broadcasts and alerts."
+    ]}
+    postActions={[
+      "Avoid contaminated floodwater.",
+      "Check for structural damage before re-entering buildings.",
+      "Disinfect and dry all belongings to prevent mold growth."
+    ]}
+    media="Videos and maps of flood-prone areas."
+    documentLink="https://ndmindia.mha.gov.in"
+    documentText="NDMA Guidelines on Flood Management"
+    videoSrc="/videos/flood.mp4" // ✅ Updated to use public folder path
+  />
+)}
+          
 
           {activeDisaster === 'cyclones' && (
             <DisasterSection 
@@ -216,7 +222,7 @@ export default function EducationalAwareness() {
   );
 }
 
-function DisasterSection({ title, preparedness, safetyTips, postActions, media, documentLink, documentText }) {
+function DisasterSection({ title, preparedness, safetyTips, postActions, media, documentLink, documentText, videoSrc }) {
   return (
     <div className="disaster-section">
       <h2>{title}</h2>
@@ -228,6 +234,18 @@ function DisasterSection({ title, preparedness, safetyTips, postActions, media, 
       <ul>{postActions.map((item, index) => <li key={index}>{item}</li>)}</ul>
       <p>📌 <strong>Relevant Media:</strong> {media}</p>
       <p>📄 <strong>Documents:</strong> <a href={documentLink} target="_blank" rel="noopener noreferrer">{documentText}</a></p>
+
+      {/* 🎥 Educational Video Section */}
+      {videoSrc && (
+        <div className="video-container">
+          <h3>🎥 Educational Video</h3>
+          <video width="100%" controls>
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      )}
     </div>
   );
 }
+
