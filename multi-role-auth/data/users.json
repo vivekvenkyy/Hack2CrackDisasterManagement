@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "email": "gmadye13@gmail.com",
+      "password": "$2b$10$/IygiEId.k2jZLD1s521WuowUTQX391DLqSp4spiDLGA4.w0PGIbm",
+      "id": "1742475223199"
+    },
+    {
+      "email": "gmadye13@gmail.com",
+      "password": "$2b$10$C4d74nEuJcCqFIcgB7/q8.N0nQrP26ItcmDAfvgJMikYmjz41145q",
+      "id": "1742478397060"
+    },
+    {
+      "email": "gmadye12@gmail.com",
+      "password": "$2b$10$mXiMPL3kK8V2OpU3g4c21u7bQUO8Y5zLwySOSAYVe01HcKjBAFZMq",
+      "id": "1742483914676"
+    }
+  ],
+  "admins": [],
+  "volunteers": [
+    {
+      "email": "gmadye12@gmail.com",
+      "password": "$2b$10$.d2VWUYiHxC82.kcegQ2r./zBWuFO9mnBZ79Yjl1yB7Gq0/zNhtvC",
+      "id": "1742482633697"
+    }
+  ],
+  "agencies": []
+}
