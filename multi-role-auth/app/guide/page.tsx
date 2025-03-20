@@ -12,14 +12,81 @@ export default function Guide() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const disasters = [
-    { name: 'earthquakes', icon: <GiEarthCrack className="w-5 h-5" />, largeIcon: <GiEarthCrack className="w-16 h-16 text-green-600" /> },
-    { name: 'floods', icon: <GiFlood className="w-5 h-5" />, largeIcon: <GiFlood className="w-16 h-16 text-green-600" /> },
-    { name: 'cyclones', icon: <GiTornado className="w-5 h-5" />, largeIcon: <GiTornado className="w-16 h-16 text-green-600" /> },
-    { name: 'landslides', icon: <GiEarthSpit className="w-5 h-5" />, largeIcon: <GiEarthSpit className="w-16 h-16 text-green-600" /> },
-    { name: 'heatwaves', icon: <GiHeatHaze className="w-5 h-5" />, largeIcon: <GiHeatHaze className="w-16 h-16 text-green-600" /> },
-    { name: 'coldwaves', icon: <GiSnowing className="w-5 h-5" />, largeIcon: <GiSnowing className="w-16 h-16 text-green-600" /> },
-    { name: 'thunderstorms', icon: <GiLightningStorm className="w-5 h-5" />, largeIcon: <GiLightningStorm className="w-16 h-16 text-green-600" /> },
-    { name: 'droughts', icon: <GiDroplets className="w-5 h-5" />, largeIcon: <GiDroplets className="w-16 h-16 text-green-600" /> },
+    {
+      name: "earthquakes",
+      icon: <GiEarthCrack className="w-5 h-5" />,
+      largeIcon: <GiEarthCrack className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Indoors: Drop, Cover, Hold On under a sturdy table.",
+        "Outdoors: Move to open space, away from buildings.",
+        "In a Vehicle: Pull over safely, avoid overpasses.",
+      ],
+    },
+    {
+      name: "floods",
+      icon: <GiFlood className="w-5 h-5" />,
+      largeIcon: <GiFlood className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Evacuate early if warnings are issued.",
+        "Avoid floodwaters: Just 6 inches can knock you down.",
+        "Stay updated with weather reports.",
+      ],
+    },
+    {
+      name: "cyclones",
+      icon: <GiTornado className="w-5 h-5" />,
+      largeIcon: <GiTornado className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Stay indoors, away from windows.",
+        "Have emergency contacts handy.",
+        "Listen to official updates.",
+      ],
+    },
+    {
+      name: "landslides",
+      icon: <GiEarthSpit className="w-5 h-5" />,
+      largeIcon: <GiEarthSpit className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Move to safer ground if a landslide is imminent.",
+        "Stay alert during heavy rains.",
+      ],
+    },
+    {
+      name: "heatwaves",
+      icon: <GiHeatHaze className="w-5 h-5" />,
+      largeIcon: <GiHeatHaze className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Recognize heatstroke signs: Dizziness, rapid heartbeat.",
+        "Use cooling shelters if available.",
+      ],
+    },
+    {
+      name: "coldwaves",
+      icon: <GiSnowing className="w-5 h-5" />,
+      largeIcon: <GiSnowing className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Use safe heating methods to prevent CO poisoning.",
+        "Check on elderly and vulnerable people.",
+      ],
+    },
+    {
+      name: "thunderstorms",
+      icon: <GiLightningStorm className="w-5 h-5" />,
+      largeIcon: <GiLightningStorm className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Avoid open fields and tall trees.",
+        "Do not use wired electronics.",
+      ],
+    },
+    {
+      name: "droughts",
+      icon: <GiDroplets className="w-5 h-5" />,
+      largeIcon: <GiDroplets className="w-16 h-16 text-green-600" />,
+      safetyTips: [
+        "Ration water usage for essentials.",
+        "Support community water initiatives.",
+      ],
+    },
   ];
 
   // Smooth scroll to content when disaster changes
