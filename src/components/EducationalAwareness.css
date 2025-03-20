@@ -1,0 +1,120 @@
+.educational-container {
+    padding-top: 160px;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+    color: #fff;
+  }
+  
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .main-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .disaster-nav {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+  }
+  
+  .nav-button {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .nav-button.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  
+  .disaster-content {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .disaster-section h2 {
+    font-size: 2rem;
+    color: #1e3a8a;
+    margin-bottom: 1.5rem;
+  }
+  
+  .guide-section {
+    margin-bottom: 2rem;
+  }
+  
+  .guide-section h3 {
+    color: #2563eb;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .guide-section ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .guide-section li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  
+  .guide-section li:before {
+    content: "•";
+    color: #2563eb;
+    position: absolute;
+    left: 0;
+  }
+  
+  .resources {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+  }
+  
+  .resources a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  
+  .resources a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .educational-container {
+      padding-top: 120px;
+    }
+  
+    .content-wrapper {
+      padding: 0 1rem;
+    }
+  
+    .main-title {
+      font-size: 2rem;
+    }
+  
+    .disaster-content {
+      padding: 1rem;
+    }
+  }

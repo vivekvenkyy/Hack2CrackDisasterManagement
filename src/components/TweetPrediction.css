@@ -1,0 +1,139 @@
+.tweet-prediction-container {
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.page-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.controls-container {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.hours-input {
+    flex: 1;
+    max-width: 200px;
+}
+
+.refresh-button {
+    height: 38px;
+}
+
+.post-card {
+    transition: transform 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.subreddit-tag {
+    display: inline-block;
+    background-color: #e3f2fd;
+    color: #1976d2;
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.post-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.post-meta {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.post-text {
+    color: #4a4a4a;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.post-stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.view-link {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.view-link:hover {
+    text-decoration: underline;
+}
+
+.alert {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    border-color: #90caf9;
+    color: #1976d2;
+}
+
+@media (max-width: 768px) {
+    .tweet-prediction-container {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hours-input {
+        max-width: none;
+    }
+}
+
+.tweet-prediction {
+  text-align: center;
+  padding: 20px;
+}
+
+.tweet-prediction-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.tweet-prediction-main {
+  max-width: 1200px;
+  margin: 0 auto;
+} 
