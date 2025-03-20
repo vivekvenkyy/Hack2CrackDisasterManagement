@@ -47,7 +47,6 @@ export default function Login() {
 
         <div className="relative z-10 space-y-6">
           <div className="flex items-center gap-3">
-            
             <h1 className="text-4xl sm:text-5xl font-bold leading-tight animate-fade-in">
               Disaster Management App
             </h1>
@@ -56,18 +55,16 @@ export default function Login() {
             Sign in to stay prepared.
           </h2>
           <p className="text-lg text-gray-200 leading-relaxed">
-            Login is simple, free, and fast. One place to manage everything for disaster preparedness, response, and recovery.
+            Login is simple, free, and fast. One place to manage everything for
+            disaster preparedness, response, and recovery.
           </p>
         </div>
 
         <div className="relative z-10 mt-8">
-          <Image
-            src="/Medical.jpg"
-            alt="Medical team responding to a disaster"
-            width={800}
-            height={320}
+          <img
+            src="https://images.pexels.com/photos/51951/forest-fire-fire-smoke-conservation-51951.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             className="w-full h-64 sm:h-80 object-cover rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-500"
-            priority
+            alt="Login Please"
           />
           <p className="text-sm text-gray-300 mt-4 text-center">
             Medical team providing aid during a disaster.
@@ -94,13 +91,19 @@ export default function Login() {
           </div>
 
           <div className="text-right">
-            <Link href="/register" className="text-green-600 hover:text-green-500 font-medium transition-colors">
+            <Link
+              href="/register"
+              className="text-green-600 hover:text-green-500 font-medium transition-colors"
+            >
               Don’t have an account? Register
             </Link>
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="role"
+              className="block text-sm font-medium text-gray-700"
+            >
               Select Role
             </label>
             <select
@@ -121,17 +124,26 @@ export default function Login() {
           </div>
 
           <div className="text-center mt-4">
-            <Link href="/forgot-password" className="text-green-600 hover:text-green-500 font-medium transition-colors">
+            <Link
+              href="/forgot-password"
+              className="text-green-600 hover:text-green-500 font-medium transition-colors"
+            >
               Forgot your password?
             </Link>
           </div>
 
           <div className="text-center mt-6">
-            <Link href="/privacy" className="text-gray-500 hover:text-gray-700 transition-colors mx-2">
+            <Link
+              href="/privacy"
+              className="text-gray-500 hover:text-gray-700 transition-colors mx-2"
+            >
               Privacy Policy
             </Link>
             <span className="text-gray-500">•</span>
-            <Link href="/terms" className="text-gray-500 hover:text-gray-700 transition-colors mx-2">
+            <Link
+              href="/terms"
+              className="text-gray-500 hover:text-gray-700 transition-colors mx-2"
+            >
               Terms and Conditions
             </Link>
           </div>

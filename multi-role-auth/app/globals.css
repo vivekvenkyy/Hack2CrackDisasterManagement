@@ -4,16 +4,50 @@
 @tailwind utilities;
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+    from {
+            opacity: 0;
+    transform: translateY(10px);
+    }
+    
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                }
+  .animate-fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 1s ease-out forwards;
-}
+    
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+    
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    
+        .animate-marquee {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+    
+        .animate-marquee span {
+            margin-right: 2rem;
+        }
+    
+        @keyframes subtleParallax {
+            0% {
+                background-position: 0 0;
+            }
+    
+            100% {
+                background-position: 100px 100px;
+            }
+        }
+    
+        .animate-subtle-parallax {
+            animation: subtleParallax 20s linear infinite;
+        }
