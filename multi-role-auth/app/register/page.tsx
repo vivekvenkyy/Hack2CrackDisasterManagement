@@ -7,8 +7,12 @@ export default function Register() {
   const [role, setRole] = useState<Role>('user');
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-2xl">
+    <div className="min-h-screen bg-gradient-to-br from-green-800 to-green-600 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Background with Mosaic Pattern */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-mosaic.png')] opacity-10"></div>
+
+      {/* Registration Form Container */}
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-2xl relative z-10">
         {/* Header */}
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 animate-fade-in">
@@ -21,7 +25,10 @@ export default function Register() {
 
         {/* Role Selection */}
         <div className="space-y-4">
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="role"
+            className="block text-sm font-medium text-gray-700"
+          >
             Select Role
           </label>
           <select
@@ -42,11 +49,15 @@ export default function Register() {
           <RoleForm
             role={role}
             onSubmit={{
-              endpoint: '/api/auth/register',
-              successMessage: 'Registration successful',
-              buttonText: 'Register',
-              onSuccess: (data: { email: string; password: string; role: Role }) => {
-                console.log('Registration data:', data);
+              endpoint: "/api/auth/register",
+              successMessage: "Registration successful",
+              buttonText: "Register",
+              onSuccess: (data: {
+                email: string;
+                password: string;
+                role: Role;
+              }) => {
+                console.log("Registration data:", data);
               },
             }}
           />
@@ -55,8 +66,11 @@ export default function Register() {
         {/* Link to Login */}
         <div className="text-center mt-6">
           <p className="text-gray-600">
-            Already have an account?{' '}
-            <a href="/login" className="text-green-600 hover:text-green-500 font-medium transition-colors">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-green-600 hover:text-green-500 font-medium transition-colors"
+            >
               Log in here
             </a>
           </p>
