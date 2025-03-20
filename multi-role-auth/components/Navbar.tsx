@@ -74,17 +74,24 @@ export default function Navbar() {
 
           {/* Navigation Links (Desktop) */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="flex items-center gap-2 hover:text-yellow-500 transition">
+            <Link
+              href="/"
+              className="flex items-center gap-2 hover:text-yellow-500 transition"
+            >
               <Home size={20} /> Home
             </Link>
-            <Link href="/inbox" className="flex items-center gap-2 hover:text-yellow-500 transition">
-              <Inbox size={20} /> Inbox
+
+            <Link
+              href="/guide"
+              className="flex items-center gap-2 hover:text-yellow-500 transition"
+            >
+              <FileText size={20} /> Guide
             </Link>
-            <Link href="/documents" className="flex items-center gap-2 hover:text-yellow-500 transition">
-              <FileText size={20} /> Documents
-            </Link>
-            <Link href="/contacts" className="flex items-center gap-2 hover:text-yellow-500 transition">
-              <Users size={20} /> Contacts
+            <Link
+              href="/emergency-contacts"
+              className="flex items-center gap-2 hover:text-yellow-500 transition"
+            >
+              <Users size={20} /> Emergency Contacts
             </Link>
 
             {/* Profile & Logout (Desktop) */}
@@ -103,7 +110,10 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href="/login" className="text-white hover:text-yellow-500 transition">
+                <Link
+                  href="/login"
+                  className="text-white hover:text-yellow-500 transition"
+                >
                   Login
                 </Link>
                 <Link
@@ -119,35 +129,28 @@ export default function Navbar() {
 
         {/* Mobile Menu (Visible when toggled) */}
         {isOpen && (
-          <div className="md:hidden bg-green-800/90 backdrop-blur-md mt-4 rounded-lg p-4">
+          <div className="md:hidden bg-green-800/90 backdrop-blur-2xl mt-4 rounded-lg p-4">
             <nav className="flex flex-col space-y-4">
               <Link
                 href="/"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700"
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700 hover:text-yellow-500"
               >
                 <Home size={20} /> Home
               </Link>
               <Link
-                href="/inbox"
+                href="/guide"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700"
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700 hover:text-yellow-500"
               >
-                <Inbox size={20} /> Inbox
+                <FileText size={20} /> Guide
               </Link>
               <Link
-                href="/documents"
+                href="/emergency-contacts"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700"
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700 hover:text-yellow-500"
               >
-                <FileText size={20} /> Documents
-              </Link>
-              <Link
-                href="/contacts"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-green-700"
-              >
-                <Users size={20} /> Contacts
+                <Users size={20} /> Emergency Contacts
               </Link>
 
               {/* Profile & Logout (Mobile) */}
