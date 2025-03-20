@@ -21,7 +21,7 @@ export default function Home() {
           </div>
           <div className="md:w-1/2 mt-10 md:mt-0">
             <img
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+              src="https://img.freepik.com/free-photo/view-apocalyptic-dark-stormy-clouds_23-2151065770.jpg"
               alt="Disaster Management Illustration"
               className="w-full rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
             />
