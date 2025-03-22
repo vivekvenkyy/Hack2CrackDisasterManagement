@@ -1,7 +1,3 @@
-Below is a comprehensive `README.md` file for the **Suraksha** project, which encompasses the mental health support platform with a chatbot powered by the Gemini 1.5 Flash API. The README provides an overview of the project, setup instructions, usage details, file structure, and additional information for contributors and users.
-
----
-
 # Suraksha
 
 **Suraksha** is a mental health support platform designed to provide empathetic and supportive assistance to survivors through a chatbot powered by the Gemini 1.5 Flash API. The platform includes features for users to post emergencies, volunteers to accept and respond to emergencies, and a chatbot for mental health support. The chatbot is accessible via a floating widget, ensuring a non-intrusive user experience.
